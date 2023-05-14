@@ -17,15 +17,18 @@ import ahmad.io.javaquizapp.models.Question;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // Declare UI elements
     Button btn_one, btn_two, btn_three, btn_four;
     TextView tv_question;
 
+    // Declare variables for tracking game progress
     private final Question question = new Question();
     private int questionIndex = 0;
     private int correctAnswers = 0;
     private final int questionLength = question.questions.length;
     private static final int TOAST_DURATION = Toast.LENGTH_SHORT;
 
+    // Initialize UI elements
     private void initializeUI() {
         tv_question = findViewById(R.id.tv_question);
         btn_one = findViewById(R.id.btn_one);
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize UI elements
         initializeUI();
 
         // Set onClickListener for buttons
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_three.setOnClickListener(this);
         btn_four.setOnClickListener(this);
 
+        // Display the first question
         setNextQuestion();
     }
 
@@ -56,17 +61,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Check if clicked answer is correct
         if (clickedButton.getText().toString().equals(question.getCorrectAnswer(questionIndex))) {
+            // Increase score if answer is correct
             correctAnswers++;
+            // Display success message
             Toast.makeText(this, "BRAVO, mais bon c'est facile", TOAST_DURATION).show();
         } else {
+            // Display failure message
             Toast.makeText(this, "Wrong Answer, je suis tellement déçu de toi !", TOAST_DURATION).show();
         }
 
         // Show next question or end game if all questions are answered
         if (questionIndex < questionLength - 1) {
+            // If there are more questions, move to the next question
             questionIndex++;
             setNextQuestion();
         } else {
+            // If all questions have been answered, end the game
             endGame();
         }
     }
