@@ -2,6 +2,7 @@ package ahmad.io.javaquizapp;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,6 +102,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void endGame() {
+        int imageId = getImageResourceId();
+        // Create the ImageView
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(imageId);
+
         String message = "You answered " +
                 correctAnswers +
                 " out of " +
@@ -110,10 +116,28 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilder
                 .setMessage(message)
+                .setView(imageView) // Set the ImageView as the view
                 .setCancelable(false)
                 .setPositiveButton("New Game", (dialog, which) -> recreate())
                 .setNegativeButton("Exit", (dialog, which) -> finish());
         alertDialogBuilder.show();
+    }
+
+    private int getImageResourceId() {
+        int score = (correctAnswers * 100) / questionLength;
+        if (score == 100) {
+            return R.drawable.phase1;
+        } else if (score < 100 && score >= 75) {
+            return R.drawable.phase2;
+        } else if (score < 75 && score >= 50) {
+            return R.drawable.phase3;
+        } else if (score < 50 && score >= 25) {
+            return R.drawable.phase4;
+        } else if (score < 25 && score > 0) {
+            return R.drawable.phase5;
+        } else {
+            return R.drawable.phase6;
+        }
     }
 }
 
