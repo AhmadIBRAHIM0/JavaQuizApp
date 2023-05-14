@@ -1,7 +1,6 @@
 package ahmad.io.javaquizapp;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,7 @@ import java.util.List;
 
 import ahmad.io.javaquizapp.models.Question;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     // Declare UI elements
     Button btn_one, btn_two, btn_three, btn_four;
@@ -45,20 +44,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Initialize UI elements
         initializeUI();
 
-        // Set onClickListener for buttons
-        btn_one.setOnClickListener(this);
-        btn_two.setOnClickListener(this);
-        btn_three.setOnClickListener(this);
-        btn_four.setOnClickListener(this);
+        // Set click listeners for each button
+        btn_one.setOnClickListener(v -> handleAnswer(btn_one));
+        btn_two.setOnClickListener(v -> handleAnswer(btn_two));
+        btn_three.setOnClickListener(v -> handleAnswer(btn_three));
+        btn_four.setOnClickListener(v -> handleAnswer(btn_four));
 
         // Display the first question
         setNextQuestion();
     }
 
-    @Override
-    public void onClick(View v) {
-        Button clickedButton = (Button) v;
-
+    private void handleAnswer(Button clickedButton) {
         // Check if clicked answer is correct
         if (clickedButton.getText().toString().equals(question.getCorrectAnswer(questionIndex))) {
             // Increase score if answer is correct
