@@ -24,19 +24,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int questionIndex = 0;
     private int correctAnswers = 0;
     private final int questionLength = question.questions.length;
+    private static final int TOAST_DURATION = Toast.LENGTH_SHORT;
 
+    private void initializeUI() {
+        tv_question = findViewById(R.id.tv_question);
+        btn_one = findViewById(R.id.btn_one);
+        btn_two = findViewById(R.id.btn_two);
+        btn_three = findViewById(R.id.btn_three);
+        btn_four = findViewById(R.id.btn_four);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Initialize UI components
-        tv_question = findViewById(R.id.tv_question);
-        btn_one = findViewById(R.id.btn_one);
-        btn_two = findViewById(R.id.btn_two);
-        btn_three = findViewById(R.id.btn_three);
-        btn_four = findViewById(R.id.btn_four);
+        initializeUI();
 
         // Set onClickListener for buttons
         btn_one.setOnClickListener(this);
@@ -54,9 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Check if clicked answer is correct
         if (clickedButton.getText().toString().equals(question.getCorrectAnswer(questionIndex))) {
             correctAnswers++;
-            Toast.makeText(this, "BRAVO, mais bon c'est facile", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "BRAVO, mais bon c'est facile", TOAST_DURATION).show();
         } else {
-            Toast.makeText(this, "Wrong Answer, t'es con ou quoi?", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Wrong Answer, je suis tellement déçu de toi !", TOAST_DURATION).show();
         }
 
         // Show next question or end game if all questions are answered
@@ -69,23 +72,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setNextQuestion() {
-
         // Set the question text
         tv_question.setText(question.getQuestion(questionIndex));
 
         // Set the answer choices
         List<String> choices = Arrays.asList(question.getChoices(questionIndex));
         Collections.shuffle(choices);
-        btn_one.setText(choices.get(0));
-        btn_two.setText(choices.get(1));
-        btn_three.setText(choices.get(2));
-        btn_four.setText(choices.get(3));
+        switch (choices.size()) {
+            case 4:
+                btn_four.setText(choices.get(3));
+            case 3:
+                btn_three.setText(choices.get(2));
+            case 2:
+                btn_two.setText(choices.get(1));
+            case 1:
+                btn_one.setText(choices.get(0));
+                break;
+            default:
+                break;
+        }
     }
 
     private void endGame() {
+        String message = "You answered " +
+                correctAnswers +
+                " out of " +
+                questionLength +
+                " questions correctly!";
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilder
-                .setMessage("You answered " + correctAnswers + " out of " + questionLength + " questions correctly!")
+                .setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton("New Game", (dialog, which) -> recreate())
                 .setNegativeButton("Exit", (dialog, which) -> finish());
