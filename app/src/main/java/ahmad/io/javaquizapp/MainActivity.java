@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import ahmad.io.javaquizapp.data.QuestionData;
 import ahmad.io.javaquizapp.models.Question;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private final Question question = new Question();
     private int questionIndex = 0;
     private int correctAnswers = 0;
-    private final int questionLength = question.questions.length;
+    private final int questionLength = QuestionData.questions.length;
     private static final int TOAST_DURATION = Toast.LENGTH_SHORT;
 
     // Initialize UI elements
