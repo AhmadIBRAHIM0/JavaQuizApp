@@ -1,8 +1,8 @@
-package ahmad.io.javaquizapp.models;
+package ahmad.io.javaquizapp.services;
 
 import ahmad.io.javaquizapp.data.QuestionData;
 
-public class Question {
+public class QuestionService {
 
     public String getQuestion(int a) {
         return QuestionData.questions[a];
@@ -15,5 +15,4 @@ public class Question {
     public String getCorrectAnswer(int a) {
         return QuestionData.correctAnswer[a];
     }
-
 }

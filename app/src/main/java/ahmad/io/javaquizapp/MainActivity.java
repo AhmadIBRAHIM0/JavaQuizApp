@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 import ahmad.io.javaquizapp.data.QuestionData;
-import ahmad.io.javaquizapp.models.Question;
+import ahmad.io.javaquizapp.services.QuestionService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_question;
 
     // Declare variables for tracking game progress
-    private final Question question = new Question();
+    private final QuestionService question = new QuestionService();
     private int questionIndex = 0;
     private int correctAnswers = 0;
     private final int questionLength = QuestionData.questions.length;
